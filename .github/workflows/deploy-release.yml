@@ -16,16 +16,24 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - name: Download README.md
-        run: |
-          curl -L ${{ github.event.release.assets.browser_download_url }} --output release.zip
-          ls -la
-          unzip release.zip
-          ls -la
-          cd $(basename ${{ github.event.release.zipball_url }} .zip)  # Enter the directory extracted from the zip
-          ls -la
-          mv README.md $GITHUB_WORKSPACE
+      #- name: Download README.md
+      #  run: |
+      #    curl -L ${{ github.event.release.assets.browser_download_url }} --output release.zip
+      #    ls -la
+      #    unzip release.zip
+      #    ls -la
+      #    cd $(basename ${{ github.event.release.zipball_url }} .zip)  # Enter the directory extracted from the zip
+      #    ls -la
+      #    mv README.md $GITHUB_WORKSPACE
+
+      - uses: robinraju/release-downloader@v1.12
+        with:
+          repository: ${{ github.repository }}
+          tag: ${{ github.ref_name }}
+          fileName: 'README.zip'
 
       - name: YouTube Rocks
-        run: echo "youtube rocks"
+        run: |
+          ls -la
+          echo "youtube rocks"
 
