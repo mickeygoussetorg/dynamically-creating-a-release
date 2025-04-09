@@ -30,12 +30,12 @@ jobs:
         run: |
           echo "starting the build"
           echo "ending the build"
-          touch myfiles.zip
+          
 
       - name: Release
         uses: softprops/action-gh-release@v2.2.1
         with:
-          files: myfiles.zip
+          files: README.md
           draft: true
           name: YouTube-Live-Please-Work-Demo-Release
           generate_release_notes: true
