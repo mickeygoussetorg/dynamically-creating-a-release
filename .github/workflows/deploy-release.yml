@@ -1,0 +1,29 @@
+name: Deploy Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy-release:
+    runs-on: ubuntu-latest
+    steps:
+      #- name: Checkout repository
+      #  uses: actions/checkout@v4
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Download README.md
+        run: |
+          curl -L ${{ github.event.release.zipball_url }} --output release.zip
+          unzip release.zip
+          cd $(basename ${{ github.event.release.zipball_url }} .zip)  # Enter the directory extracted from the zip
+          ls -la
+          mv README.md $GITHUB_WORKSPACE
+
+      - name: YouTube Rocks
+        run: echo "youtube rocks"
+
